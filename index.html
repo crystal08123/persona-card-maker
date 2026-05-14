@@ -34,79 +34,62 @@
     padding: 48px 24px 80px;
   }
 
-  header { text-align: center; margin-bottom: 48px; }
+  header { text-align: center; margin-bottom: 28px; }
   header h1 { font-size: 22px; font-weight: 500; letter-spacing: -0.3px; }
   header p { font-size: 14px; color: var(--text-secondary); margin-top: 6px; }
 
+  .api-bar {
+    width: 100%; max-width: 840px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px 20px;
+    display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+  }
+  .api-bar label { font-size: 12px; font-weight: 500; color: var(--text-secondary); white-space: nowrap; margin: 0; }
+  .api-bar input {
+    flex: 1; font-size: 13px; padding: 7px 10px; border-radius: 7px;
+    border: 1px solid var(--border); background: var(--bg); color: var(--text-primary);
+    font-family: var(--font-sans); outline: none; resize: none; appearance: none;
+  }
+  .api-bar input:focus { border-color: var(--accent); background: #fff; }
+  .api-status { font-size: 11px; color: var(--text-hint); white-space: nowrap; }
+  .api-status.ok { color: #4C8C6E; font-weight: 500; }
+
   .layout {
-    display: grid;
-    grid-template-columns: 400px 380px;
-    gap: 32px;
-    align-items: start;
-    max-width: 840px;
-    width: 100%;
+    display: grid; grid-template-columns: 400px 380px;
+    gap: 32px; align-items: start; max-width: 840px; width: 100%;
   }
 
   .form-panel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 28px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px;
   }
 
   .section-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    color: var(--text-hint);
-    margin: 20px 0 14px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.8px;
+    text-transform: uppercase; color: var(--text-hint); margin: 20px 0 14px;
   }
-
   .section-label:first-child { margin-top: 0; }
 
   .field { margin-bottom: 14px; }
 
   label {
-    display: block;
-    font-size: 12px;
-    color: var(--text-secondary);
-    margin-bottom: 5px;
-    font-weight: 500;
+    display: block; font-size: 12px; color: var(--text-secondary);
+    margin-bottom: 5px; font-weight: 500;
   }
 
   input[type="text"], input[type="number"], textarea, select {
-    width: 100%;
-    font-family: var(--font-sans);
-    font-size: 14px;
-    color: var(--text-primary);
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 9px 12px;
-    outline: none;
-    transition: border-color 0.15s;
-    resize: none;
-    appearance: none;
+    width: 100%; font-family: var(--font-sans); font-size: 14px;
+    color: var(--text-primary); background: var(--bg);
+    border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px;
+    outline: none; transition: border-color 0.15s; resize: none; appearance: none;
   }
-
-  input:focus, textarea:focus, select:focus {
-    border-color: var(--accent);
-    background: #fff;
-  }
-
+  input:focus, textarea:focus, select:focus { border-color: var(--accent); background: #fff; }
   select {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23A8A49C' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    padding-right: 32px;
+    background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px;
   }
-
   textarea { height: 60px; line-height: 1.5; }
-
   .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-
   .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
   .color-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
@@ -120,31 +103,51 @@
   .btn-group { display: flex; gap: 8px; margin-top: 24px; }
 
   button {
-    font-family: var(--font-sans);
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    border-radius: 8px;
-    padding: 10px 18px;
-    transition: all 0.15s;
-    border: 1px solid var(--border);
+    font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+    cursor: pointer; border-radius: 8px; padding: 10px 18px;
+    transition: all 0.15s; border: 1px solid var(--border);
   }
-
   .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); flex: 1; }
   .btn-primary:hover { opacity: 0.85; }
   .btn-secondary { background: var(--surface); color: var(--text-secondary); }
   .btn-secondary:hover { background: var(--bg); }
 
-  /* 미리보기 */
-  .preview-panel { position: sticky; top: 24px; }
-
-  .preview-label {
+  .ai-section { border-top: 1px solid var(--border); padding-top: 18px; margin-top: 4px; }
+  .ai-section-label {
     font-size: 11px; font-weight: 600; letter-spacing: 0.8px;
-    text-transform: uppercase; color: var(--text-hint);
-    margin-bottom: 12px;
-    display: flex; justify-content: space-between; align-items: center;
+    text-transform: uppercase; color: var(--text-hint); margin-bottom: 12px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .ai-section-label::before { content: '✦'; font-size: 10px; }
+
+  .btn-ai {
+    width: 100%; background: var(--bg); color: var(--text-primary);
+    border: 1px solid var(--border); padding: 10px 14px; font-size: 13px;
+    text-align: left; border-radius: 8px; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 10px; transition: all 0.15s;
+  }
+  .btn-ai:hover:not(:disabled) { background: var(--surface); border-color: var(--accent); }
+  .btn-ai:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-ai-icon { font-size: 16px; flex-shrink: 0; }
+  .btn-ai-desc { font-size: 11px; color: var(--text-secondary); margin-top: 1px; }
+
+  .ai-result-box {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 14px; margin-bottom: 10px; font-size: 13px;
+    line-height: 1.65; color: var(--text-primary); display: none;
+  }
+  .ai-result-box.visible { display: block; }
+  .ai-result-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.5px;
+    text-transform: uppercase; color: var(--text-hint); margin-bottom: 7px;
   }
 
+  .preview-panel { position: sticky; top: 24px; }
+  .preview-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.8px;
+    text-transform: uppercase; color: var(--text-hint); margin-bottom: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
   .btn-download {
     background: var(--surface); color: var(--text-primary);
     border: 1px solid var(--border); font-size: 12px;
@@ -152,76 +155,60 @@
   }
   .btn-download:hover { background: var(--bg); }
 
-  /* 카드 */
   .persona-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-    font-family: var(--font-sans);
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden; font-family: var(--font-sans);
   }
-
   .card-header {
-    padding: 22px 22px 18px;
-    border-bottom: 1px solid var(--border);
+    padding: 22px 22px 18px; border-bottom: 1px solid var(--border);
     display: flex; align-items: center; gap: 14px;
   }
-
   .avatar {
     width: 48px; height: 48px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     font-size: 18px; font-weight: 500; flex-shrink: 0; color: #fff;
   }
-
   .card-name { font-size: 16px; font-weight: 500; line-height: 1.2; }
   .card-sub { font-size: 12px; color: var(--text-secondary); margin-top: 3px; }
-
   .card-body { padding: 18px 22px; }
-
   .card-section { margin-bottom: 16px; }
   .card-section:last-child { margin-bottom: 0; }
-
   .card-section-title {
     font-size: 10px; font-weight: 600; letter-spacing: 0.7px;
     text-transform: uppercase; color: var(--text-hint); margin-bottom: 6px;
   }
-
-  .card-section-content {
-    font-size: 13px; color: var(--text-primary); line-height: 1.6;
-  }
-
+  .card-section-content { font-size: 13px; color: var(--text-primary); line-height: 1.6; }
   .tag-list { display: flex; flex-wrap: wrap; gap: 5px; }
-
   .tag {
-    font-size: 11px; font-weight: 500; padding: 3px 9px;
-    border-radius: 20px; background: var(--tag-bg);
-    color: var(--text-secondary); border: 1px solid var(--border);
+    font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 20px;
+    background: var(--tag-bg); color: var(--text-secondary); border: 1px solid var(--border);
   }
-
-  .stat-row {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-  }
-
-  .stat-box {
-    background: var(--bg); border-radius: 8px; padding: 10px 12px;
-  }
-
-  .stat-label { font-size: 10px; color: var(--text-hint); font-weight: 500; margin-bottom: 3px; letter-spacing: 0.3px; }
+  .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-box { background: var(--bg); border-radius: 8px; padding: 10px 12px; }
+  .stat-label { font-size: 10px; color: var(--text-hint); font-weight: 500; margin-bottom: 3px; }
   .stat-value { font-size: 13px; color: var(--text-primary); font-weight: 500; }
-
-  .channel-bar { display: flex; gap: 4px; margin-top: 6px; }
+  .channel-bar { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
   .channel-chip {
     font-size: 11px; padding: 3px 8px; border-radius: 6px;
-    background: var(--tag-bg); color: var(--text-secondary);
-    border: 1px solid var(--border);
+    background: var(--tag-bg); color: var(--text-secondary); border: 1px solid var(--border);
   }
   .channel-chip.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-
   .quote-block {
     font-style: italic; font-size: 13px; color: var(--text-secondary);
     border-left: 2px solid var(--border); padding-left: 12px; line-height: 1.6;
   }
-
+  .card-summary {
+    font-size: 13px; color: var(--text-secondary); line-height: 1.65;
+    padding: 12px 14px; background: var(--bg); border-radius: 8px;
+    border-left: 2px solid var(--accent);
+  }
+  .card-suggestions { list-style: none; padding: 0; }
+  .card-suggestions li {
+    font-size: 12px; color: var(--text-primary); padding: 5px 0;
+    border-bottom: 1px solid var(--border); line-height: 1.5;
+  }
+  .card-suggestions li:last-child { border-bottom: none; }
+  .card-suggestions li::before { content: '→ '; color: var(--text-hint); }
   .empty-state {
     text-align: center; padding: 48px 24px;
     color: var(--text-hint); font-size: 14px; line-height: 1.7;
@@ -240,18 +227,21 @@
   <p>종합몰 쇼핑 행동 중심의 페르소나를 시각화하세요</p>
 </header>
 
+<div class="api-bar">
+  <label>Anthropic API Key</label>
+  <input type="password" id="api-key" placeholder="sk-ant-..." oninput="checkKey()">
+  <span class="api-status" id="api-status">미입력</span>
+</div>
+
 <div class="layout">
 
-  <!-- 폼 -->
   <div class="form-panel">
 
     <p class="section-label">기본 정보</p>
-
     <div class="field">
       <label>이름</label>
       <input type="text" id="name" placeholder="예: 박소연" oninput="update()">
     </div>
-
     <div class="row-2">
       <div class="field">
         <label>나이</label>
@@ -265,7 +255,6 @@
 
     <hr class="divider">
     <p class="section-label">구매 패턴</p>
-
     <div class="row-2">
       <div class="field">
         <label>월 평균 지출</label>
@@ -289,12 +278,10 @@
         </select>
       </div>
     </div>
-
     <div class="field">
       <label>주 이용 채널 <span style="font-weight:400;color:var(--text-hint)">(쉼표 구분, 첫 번째가 메인)</span></label>
       <input type="text" id="channel" placeholder="예: 쿠팡, 네이버쇼핑, 올리브영" oninput="update()">
     </div>
-
     <div class="field">
       <label>주요 구매 카테고리 <span style="font-weight:400;color:var(--text-hint)">(쉼표 구분)</span></label>
       <input type="text" id="category" placeholder="예: 생필품, 식품, 패션잡화" oninput="update()">
@@ -302,12 +289,10 @@
 
     <hr class="divider">
     <p class="section-label">구매 결정 과정</p>
-
     <div class="field">
       <label>구매 결정 요인 <span style="font-weight:400;color:var(--text-hint)">(중요한 순, 쉼표 구분)</span></label>
       <input type="text" id="decision" placeholder="예: 리뷰 수, 가격, 배송속도" oninput="update()">
     </div>
-
     <div class="field">
       <label>구매 전 행동</label>
       <textarea id="behavior" placeholder="예: 리뷰 20개 이상 꼭 확인, 최저가 비교 앱 사용" oninput="update()"></textarea>
@@ -315,17 +300,14 @@
 
     <hr class="divider">
     <p class="section-label">불만 & 이탈 요인</p>
-
     <div class="field">
       <label>장바구니 이탈 이유</label>
       <textarea id="abandon" placeholder="예: 배송비 추가 발생, 예상보다 긴 배송일" oninput="update()"></textarea>
     </div>
-
     <div class="field">
       <label>주요 불만 경험</label>
       <textarea id="complaint" placeholder="예: 사진과 다른 상품, CS 응답 느림" oninput="update()"></textarea>
     </div>
-
     <div class="field">
       <label>재구매 / 충성도</label>
       <select id="loyalty" onchange="update()">
@@ -336,26 +318,53 @@
         <option>무관심 (편한 곳에서 구매)</option>
       </select>
     </div>
-
     <div class="field">
       <label>한마디 (Quote)</label>
       <textarea id="quote" placeholder="예: 리뷰 없으면 그냥 안 사요" oninput="update()"></textarea>
     </div>
 
     <hr class="divider">
-
     <div class="field">
       <label>아바타 색상</label>
       <div class="color-row" id="color-row"></div>
     </div>
-
     <div class="btn-group">
       <button class="btn-primary" onclick="update()">미리보기 업데이트</button>
       <button class="btn-secondary" onclick="reset()">초기화</button>
     </div>
+
+    <hr class="divider">
+
+    <div class="ai-section">
+      <div class="ai-section-label">AI 기능</div>
+
+      <button class="btn-ai" id="btn-summary" onclick="genSummary()" disabled>
+        <span class="btn-ai-icon">📝</span>
+        <div>
+          <div>페르소나 한줄 요약 생성</div>
+          <div class="btn-ai-desc">입력된 내용을 바탕으로 이 사람을 한 문장으로 정의</div>
+        </div>
+      </button>
+      <div class="ai-result-box" id="summary-result">
+        <div class="ai-result-label">AI 요약</div>
+        <div id="summary-text"></div>
+      </div>
+
+      <button class="btn-ai" id="btn-suggest" onclick="genSuggestions()" disabled>
+        <span class="btn-ai-icon">💡</span>
+        <div>
+          <div>기능 제안 생성</div>
+          <div class="btn-ai-desc">불만/이탈 요인 기반으로 서비스 개선 아이디어 제안</div>
+        </div>
+      </button>
+      <div class="ai-result-box" id="suggest-result">
+        <div class="ai-result-label">개선 아이디어</div>
+        <div id="suggest-text"></div>
+      </div>
+    </div>
+
   </div>
 
-  <!-- 카드 미리보기 -->
   <div class="preview-panel">
     <div class="preview-label">
       <span>카드 미리보기</span>
@@ -408,92 +417,159 @@
 
   function section(title, content) {
     if (!content) return '';
-    return `<div class="card-section">
-      <div class="card-section-title">${title}</div>
-      <div class="card-section-content">${esc(content).replace(/\n/g,'<br>')}</div>
-    </div>`;
+    return `<div class="card-section"><div class="card-section-title">${title}</div><div class="card-section-content">${esc(content).replace(/\n/g,'<br>')}</div></div>`;
   }
 
   function tagSection(title, str) {
     const t = tags(str);
     if (!t) return '';
-    return `<div class="card-section">
-      <div class="card-section-title">${title}</div>
-      <div class="tag-list">${t}</div>
-    </div>`;
+    return `<div class="card-section"><div class="card-section-title">${title}</div><div class="tag-list">${t}</div></div>`;
+  }
+
+  function checkKey() {
+    const key = val('api-key');
+    const status = document.getElementById('api-status');
+    const hasKey = key.startsWith('sk-ant-') && key.length > 20;
+    const hasName = !!val('name');
+    status.textContent = hasKey ? '입력됨 ✓' : '미입력';
+    status.className = 'api-status' + (hasKey ? ' ok' : '');
+    document.getElementById('btn-summary').disabled = !(hasKey && hasName);
+    document.getElementById('btn-suggest').disabled = !(hasKey && hasName);
   }
 
   function update() {
     const name = val('name');
     const card = document.getElementById('persona-card');
+    checkKey();
+
     if (!name) {
       card.innerHTML = '<div class="empty-state">이름을 입력하면<br>카드가 생성됩니다</div>';
       return;
     }
 
-    const age = val('age');
-    const job = val('job');
-    const spend = val('spend');
-    const freq = val('freq');
-    const channel = val('channel');
-    const category = val('category');
-    const decision = val('decision');
-    const behavior = val('behavior');
-    const abandon = val('abandon');
-    const complaint = val('complaint');
-    const loyalty = val('loyalty');
-    const quote = val('quote');
+    const age = val('age'), job = val('job'), spend = val('spend'), freq = val('freq');
+    const channel = val('channel'), category = val('category'), decision = val('decision');
+    const behavior = val('behavior'), abandon = val('abandon'), complaint = val('complaint');
+    const loyalty = val('loyalty'), quote = val('quote');
 
     const sub = [age ? age + '세' : '', job].filter(Boolean).join(' · ');
-
-    // 채널 chips
     const channels = channel ? channel.split(',').map(c => c.trim()).filter(Boolean) : [];
     const channelHtml = channels.length
       ? `<div class="channel-bar">${channels.map((c,i) => `<span class="channel-chip${i===0?' primary':''}">${esc(c)}</span>`).join('')}</div>`
       : '';
 
-    // 지출 + 빈도 stat
-    const hasStats = spend || freq;
-    const statsHtml = hasStats ? `
-      <div class="card-section">
-        <div class="card-section-title">구매 패턴</div>
+    const statsHtml = (spend || freq) ? `
+      <div class="card-section"><div class="card-section-title">구매 패턴</div>
         <div class="stat-row">
           ${spend ? `<div class="stat-box"><div class="stat-label">월 평균 지출</div><div class="stat-value">${esc(spend)}</div></div>` : ''}
           ${freq ? `<div class="stat-box"><div class="stat-label">구매 빈도</div><div class="stat-value">${esc(freq)}</div></div>` : ''}
         </div>
       </div>` : '';
 
-    const channelSection = channelHtml ? `
-      <div class="card-section">
-        <div class="card-section-title">주 이용 채널</div>
-        ${channelHtml}
-      </div>` : '';
+    const channelSection = channelHtml ? `<div class="card-section"><div class="card-section-title">주 이용 채널</div>${channelHtml}</div>` : '';
+    const quoteHtml = quote ? `<div class="card-section"><div class="quote-block">"${esc(quote)}"</div></div>` : '';
 
-    const quoteHtml = quote ? `
-      <div class="card-section">
-        <div class="quote-block">"${esc(quote)}"</div>
+    const summaryVal = document.getElementById('summary-text')?.dataset.value || '';
+    const summaryHtml = summaryVal ? `
+      <div class="card-section"><div class="card-section-title">AI 요약</div>
+        <div class="card-summary">${esc(summaryVal)}</div>
       </div>` : '';
 
     card.innerHTML = `
       <div class="card-header">
         <div class="avatar" style="background:${selectedColor}">${initials(name)}</div>
-        <div>
-          <div class="card-name">${esc(name)}</div>
-          ${sub ? `<div class="card-sub">${esc(sub)}</div>` : ''}
-        </div>
+        <div><div class="card-name">${esc(name)}</div>${sub ? `<div class="card-sub">${esc(sub)}</div>` : ''}</div>
       </div>
       <div class="card-body">
-        ${quoteHtml}
-        ${statsHtml}
-        ${channelSection}
+        ${quoteHtml}${summaryHtml}${statsHtml}${channelSection}
         ${tagSection('주요 카테고리', category)}
         ${tagSection('구매 결정 요인', decision)}
         ${section('구매 전 행동', behavior)}
         ${section('장바구니 이탈 이유', abandon)}
         ${section('주요 불만', complaint)}
         ${loyalty ? `<div class="card-section"><div class="card-section-title">재구매 성향</div><div class="tag-list"><span class="tag">${esc(loyalty)}</span></div></div>` : ''}
-      </div>
-    `;
+      </div>`;
+  }
+
+  function buildContext() {
+    return [
+      val('name') && `이름: ${val('name')}`,
+      val('age') && `나이: ${val('age')}세`,
+      val('job') && `직업: ${val('job')}`,
+      val('spend') && `월 평균 지출: ${val('spend')}`,
+      val('freq') && `구매 빈도: ${val('freq')}`,
+      val('channel') && `주 이용 채널: ${val('channel')}`,
+      val('category') && `주요 구매 카테고리: ${val('category')}`,
+      val('decision') && `구매 결정 요인: ${val('decision')}`,
+      val('behavior') && `구매 전 행동: ${val('behavior')}`,
+      val('abandon') && `장바구니 이탈 이유: ${val('abandon')}`,
+      val('complaint') && `주요 불만: ${val('complaint')}`,
+      val('loyalty') && `재구매 성향: ${val('loyalty')}`,
+      val('quote') && `한마디: ${val('quote')}`,
+    ].filter(Boolean).join('\n');
+  }
+
+  async function callClaude(prompt) {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': val('api-key'),
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 500,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    if (!res.ok) throw new Error('API 오류');
+    const data = await res.json();
+    return data.content[0].text.trim();
+  }
+
+  async function genSummary() {
+    const btn = document.getElementById('btn-summary');
+    const box = document.getElementById('summary-result');
+    const textEl = document.getElementById('summary-text');
+    btn.disabled = true;
+    btn.querySelector('div > div:first-child').textContent = '생성 중...';
+    box.classList.add('visible');
+    textEl.textContent = '잠시만요...';
+    try {
+      const result = await callClaude(
+        `다음은 커머스 사용자 페르소나 정보입니다:\n\n${buildContext()}\n\n이 사람을 UX 기획자가 팀에게 소개할 한 문장 요약을 만들어주세요. 구매 성향과 핵심 특징이 드러나게, "~한 ~세 ~입니다" 형태로 작성하고 문장만 출력하세요.`
+      );
+      textEl.textContent = result;
+      textEl.dataset.value = result;
+      update();
+    } catch(e) {
+      textEl.textContent = '오류가 발생했습니다. API 키를 확인해주세요.';
+    }
+    btn.querySelector('div > div:first-child').textContent = '페르소나 한줄 요약 생성';
+    btn.disabled = false;
+  }
+
+  async function genSuggestions() {
+    const btn = document.getElementById('btn-suggest');
+    const box = document.getElementById('suggest-result');
+    const textEl = document.getElementById('suggest-text');
+    btn.disabled = true;
+    btn.querySelector('div > div:first-child').textContent = '생성 중...';
+    box.classList.add('visible');
+    textEl.innerHTML = '<span style="color:var(--text-hint);font-size:13px">잠시만요...</span>';
+    try {
+      const result = await callClaude(
+        `다음은 커머스 사용자 페르소나 정보입니다:\n\n${buildContext()}\n\n이 사용자의 불만, 이탈 요인, 구매 패턴을 분석하여 서비스 개선 아이디어를 3가지 제안해주세요. 각 아이디어는 한 줄로, 구체적인 기능명과 효과를 포함해주세요. 번호나 기호 없이 줄바꿈으로만 구분해서 한국어로 출력하세요.`
+      );
+      const items = result.split('\n').map(l => l.trim()).filter(Boolean);
+      textEl.innerHTML = '<ul class="card-suggestions">' + items.map(i => `<li>${esc(i.replace(/^[-•·]\s*/,''))}</li>`).join('') + '</ul>';
+    } catch(e) {
+      textEl.innerHTML = '<span style="color:var(--text-hint);font-size:13px">오류가 발생했습니다. API 키를 확인해주세요.</span>';
+    }
+    btn.querySelector('div > div:first-child').textContent = '기능 제안 생성';
+    btn.disabled = false;
   }
 
   function reset() {
@@ -501,17 +577,20 @@
       .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
     selectedColor = COLORS[0];
     document.querySelectorAll('.color-dot').forEach((d, i) => d.classList.toggle('selected', i === 0));
+    const sumEl = document.getElementById('summary-text');
+    sumEl.textContent = ''; sumEl.dataset.value = '';
+    document.getElementById('suggest-text').innerHTML = '';
+    document.getElementById('summary-result').classList.remove('visible');
+    document.getElementById('suggest-result').classList.remove('visible');
     update();
   }
 
   function download() {
-    const name = val('name') || '페르소나';
-    const card = document.getElementById('persona-card');
     if (!val('name')) { alert('먼저 이름을 입력해주세요.'); return; }
-    html2canvas(card, { scale: 2, backgroundColor: '#ffffff', useCORS: true, logging: false })
+    html2canvas(document.getElementById('persona-card'), { scale: 2, backgroundColor: '#ffffff', useCORS: true, logging: false })
       .then(canvas => {
         const link = document.createElement('a');
-        link.download = `persona-${name}.png`;
+        link.download = `persona-${val('name')}.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
       }).catch(() => alert('PNG 저장에 실패했습니다.'));
