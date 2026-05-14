@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>커머스 페르소나 카드 메이커</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F6F3;
+    --surface: #FFFFFF;
+    --border: #E8E6E0;
+    --text-primary: #1A1917;
+    --text-secondary: #6B6860;
+    --text-hint: #A8A49C;
+    --accent: #1A1917;
+    --tag-bg: #F0EEE9;
+    --radius: 12px;
+    --font-sans: 'DM Sans', 'Noto Sans KR', sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 24px 80px;
+  }
+
+  header { text-align: center; margin-bottom: 48px; }
+  header h1 { font-size: 22px; font-weight: 500; letter-spacing: -0.3px; }
+  header p { font-size: 14px; color: var(--text-secondary); margin-top: 6px; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 400px 380px;
+    gap: 32px;
+    align-items: start;
+    max-width: 840px;
+    width: 100%;
+  }
+
+  .form-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-hint);
+    margin: 20px 0 14px;
+  }
+
+  .section-label:first-child { margin-top: 0; }
+
+  .field { margin-bottom: 14px; }
+
+  label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+
+  input[type="text"], input[type="number"], textarea, select {
+    width: 100%;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 12px;
+    outline: none;
+    transition: border-color 0.15s;
+    resize: none;
+    appearance: none;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--accent);
+    background: #fff;
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23A8A49C' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+  }
+
+  textarea { height: 60px; line-height: 1.5; }
+
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  .color-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+  .color-dot {
+    width: 24px; height: 24px; border-radius: 50%; cursor: pointer;
+    border: 2px solid transparent; transition: transform 0.15s;
+  }
+  .color-dot:hover { transform: scale(1.15); }
+  .color-dot.selected { border-color: var(--text-primary); }
+
+  .btn-group { display: flex; gap: 8px; margin-top: 24px; }
+
+  button {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 10px 18px;
+    transition: all 0.15s;
+    border: 1px solid var(--border);
+  }
+
+  .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); flex: 1; }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-secondary { background: var(--surface); color: var(--text-secondary); }
+  .btn-secondary:hover { background: var(--bg); }
+
+  /* 미리보기 */
+  .preview-panel { position: sticky; top: 24px; }
+
+  .preview-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.8px;
+    text-transform: uppercase; color: var(--text-hint);
+    margin-bottom: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .btn-download {
+    background: var(--surface); color: var(--text-primary);
+    border: 1px solid var(--border); font-size: 12px;
+    padding: 6px 12px; display: flex; align-items: center; gap: 5px;
+  }
+  .btn-download:hover { background: var(--bg); }
+
+  /* 카드 */
+  .persona-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    font-family: var(--font-sans);
+  }
+
+  .card-header {
+    padding: 22px 22px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 14px;
+  }
+
+  .avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 500; flex-shrink: 0; color: #fff;
+  }
+
+  .card-name { font-size: 16px; font-weight: 500; line-height: 1.2; }
+  .card-sub { font-size: 12px; color: var(--text-secondary); margin-top: 3px; }
+
+  .card-body { padding: 18px 22px; }
+
+  .card-section { margin-bottom: 16px; }
+  .card-section:last-child { margin-bottom: 0; }
+
+  .card-section-title {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.7px;
+    text-transform: uppercase; color: var(--text-hint); margin-bottom: 6px;
+  }
+
+  .card-section-content {
+    font-size: 13px; color: var(--text-primary); line-height: 1.6;
+  }
+
+  .tag-list { display: flex; flex-wrap: wrap; gap: 5px; }
+
+  .tag {
+    font-size: 11px; font-weight: 500; padding: 3px 9px;
+    border-radius: 20px; background: var(--tag-bg);
+    color: var(--text-secondary); border: 1px solid var(--border);
+  }
+
+  .stat-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  }
+
+  .stat-box {
+    background: var(--bg); border-radius: 8px; padding: 10px 12px;
+  }
+
+  .stat-label { font-size: 10px; color: var(--text-hint); font-weight: 500; margin-bottom: 3px; letter-spacing: 0.3px; }
+  .stat-value { font-size: 13px; color: var(--text-primary); font-weight: 500; }
+
+  .channel-bar { display: flex; gap: 4px; margin-top: 6px; }
+  .channel-chip {
+    font-size: 11px; padding: 3px 8px; border-radius: 6px;
+    background: var(--tag-bg); color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+  .channel-chip.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .quote-block {
+    font-style: italic; font-size: 13px; color: var(--text-secondary);
+    border-left: 2px solid var(--border); padding-left: 12px; line-height: 1.6;
+  }
+
+  .empty-state {
+    text-align: center; padding: 48px 24px;
+    color: var(--text-hint); font-size: 14px; line-height: 1.7;
+  }
+
+  @media (max-width: 820px) {
+    .layout { grid-template-columns: 1fr; }
+    .preview-panel { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>커머스 페르소나 카드 메이커</h1>
+  <p>종합몰 쇼핑 행동 중심의 페르소나를 시각화하세요</p>
+</header>
+
+<div class="layout">
+
+  <!-- 폼 -->
+  <div class="form-panel">
+
+    <p class="section-label">기본 정보</p>
+
+    <div class="field">
+      <label>이름</label>
+      <input type="text" id="name" placeholder="예: 박소연" oninput="update()">
+    </div>
+
+    <div class="row-2">
+      <div class="field">
+        <label>나이</label>
+        <input type="number" id="age" placeholder="34" min="10" max="99" oninput="update()">
+      </div>
+      <div class="field">
+        <label>직업</label>
+        <input type="text" id="job" placeholder="예: 회사원" oninput="update()">
+      </div>
+    </div>
+
+    <hr class="divider">
+    <p class="section-label">구매 패턴</p>
+
+    <div class="row-2">
+      <div class="field">
+        <label>월 평균 지출</label>
+        <select id="spend" onchange="update()">
+          <option value="">선택</option>
+          <option>5만원 미만</option>
+          <option>5–10만원</option>
+          <option>10–30만원</option>
+          <option>30–50만원</option>
+          <option>50만원 이상</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>구매 빈도</label>
+        <select id="freq" onchange="update()">
+          <option value="">선택</option>
+          <option>월 1회 이하</option>
+          <option>월 2–3회</option>
+          <option>주 1–2회</option>
+          <option>거의 매일</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>주 이용 채널 <span style="font-weight:400;color:var(--text-hint)">(쉼표 구분, 첫 번째가 메인)</span></label>
+      <input type="text" id="channel" placeholder="예: 쿠팡, 네이버쇼핑, 올리브영" oninput="update()">
+    </div>
+
+    <div class="field">
+      <label>주요 구매 카테고리 <span style="font-weight:400;color:var(--text-hint)">(쉼표 구분)</span></label>
+      <input type="text" id="category" placeholder="예: 생필품, 식품, 패션잡화" oninput="update()">
+    </div>
+
+    <hr class="divider">
+    <p class="section-label">구매 결정 과정</p>
+
+    <div class="field">
+      <label>구매 결정 요인 <span style="font-weight:400;color:var(--text-hint)">(중요한 순, 쉼표 구분)</span></label>
+      <input type="text" id="decision" placeholder="예: 리뷰 수, 가격, 배송속도" oninput="update()">
+    </div>
+
+    <div class="field">
+      <label>구매 전 행동</label>
+      <textarea id="behavior" placeholder="예: 리뷰 20개 이상 꼭 확인, 최저가 비교 앱 사용" oninput="update()"></textarea>
+    </div>
+
+    <hr class="divider">
+    <p class="section-label">불만 & 이탈 요인</p>
+
+    <div class="field">
+      <label>장바구니 이탈 이유</label>
+      <textarea id="abandon" placeholder="예: 배송비 추가 발생, 예상보다 긴 배송일" oninput="update()"></textarea>
+    </div>
+
+    <div class="field">
+      <label>주요 불만 경험</label>
+      <textarea id="complaint" placeholder="예: 사진과 다른 상품, CS 응답 느림" oninput="update()"></textarea>
+    </div>
+
+    <div class="field">
+      <label>재구매 / 충성도</label>
+      <select id="loyalty" onchange="update()">
+        <option value="">선택</option>
+        <option>단골 (특정 셀러/브랜드 고집)</option>
+        <option>조건부 재구매 (만족하면 재구매)</option>
+        <option>가격 우선 (매번 최저가 탐색)</option>
+        <option>무관심 (편한 곳에서 구매)</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>한마디 (Quote)</label>
+      <textarea id="quote" placeholder="예: 리뷰 없으면 그냥 안 사요" oninput="update()"></textarea>
+    </div>
+
+    <hr class="divider">
+
+    <div class="field">
+      <label>아바타 색상</label>
+      <div class="color-row" id="color-row"></div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn-primary" onclick="update()">미리보기 업데이트</button>
+      <button class="btn-secondary" onclick="reset()">초기화</button>
+    </div>
+  </div>
+
+  <!-- 카드 미리보기 -->
+  <div class="preview-panel">
+    <div class="preview-label">
+      <span>카드 미리보기</span>
+      <button class="btn-download" onclick="download()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        PNG 저장
+      </button>
+    </div>
+    <div id="persona-card" class="persona-card">
+      <div class="empty-state">이름을 입력하면<br>카드가 생성됩니다</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const COLORS = ['#1A1917','#4A6FA5','#4C8C6E','#B05A3A','#7B5EA7','#C87941','#5A7A8C'];
+  let selectedColor = COLORS[0];
+
+  const colorRow = document.getElementById('color-row');
+  COLORS.forEach((c, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'color-dot' + (i === 0 ? ' selected' : '');
+    dot.style.background = c;
+    dot.onclick = () => {
+      document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('selected'));
+      dot.classList.add('selected');
+      selectedColor = c;
+      update();
+    };
+    colorRow.appendChild(dot);
+  });
+
+  function val(id) { return document.getElementById(id)?.value.trim() || ''; }
+
+  function initials(name) {
+    const parts = name.trim().split(/\s+/);
+    return parts.length >= 2 ? parts[0][0] + parts[1][0] : name.slice(0, 2);
+  }
+
+  function esc(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function tags(str) {
+    if (!str) return '';
+    return str.split(',').map(t => t.trim()).filter(Boolean)
+      .map(t => `<span class="tag">${esc(t)}</span>`).join('');
+  }
+
+  function section(title, content) {
+    if (!content) return '';
+    return `<div class="card-section">
+      <div class="card-section-title">${title}</div>
+      <div class="card-section-content">${esc(content).replace(/\n/g,'<br>')}</div>
+    </div>`;
+  }
+
+  function tagSection(title, str) {
+    const t = tags(str);
+    if (!t) return '';
+    return `<div class="card-section">
+      <div class="card-section-title">${title}</div>
+      <div class="tag-list">${t}</div>
+    </div>`;
+  }
+
+  function update() {
+    const name = val('name');
+    const card = document.getElementById('persona-card');
+    if (!name) {
+      card.innerHTML = '<div class="empty-state">이름을 입력하면<br>카드가 생성됩니다</div>';
+      return;
+    }
+
+    const age = val('age');
+    const job = val('job');
+    const spend = val('spend');
+    const freq = val('freq');
+    const channel = val('channel');
+    const category = val('category');
+    const decision = val('decision');
+    const behavior = val('behavior');
+    const abandon = val('abandon');
+    const complaint = val('complaint');
+    const loyalty = val('loyalty');
+    const quote = val('quote');
+
+    const sub = [age ? age + '세' : '', job].filter(Boolean).join(' · ');
+
+    // 채널 chips
+    const channels = channel ? channel.split(',').map(c => c.trim()).filter(Boolean) : [];
+    const channelHtml = channels.length
+      ? `<div class="channel-bar">${channels.map((c,i) => `<span class="channel-chip${i===0?' primary':''}">${esc(c)}</span>`).join('')}</div>`
+      : '';
+
+    // 지출 + 빈도 stat
+    const hasStats = spend || freq;
+    const statsHtml = hasStats ? `
+      <div class="card-section">
+        <div class="card-section-title">구매 패턴</div>
+        <div class="stat-row">
+          ${spend ? `<div class="stat-box"><div class="stat-label">월 평균 지출</div><div class="stat-value">${esc(spend)}</div></div>` : ''}
+          ${freq ? `<div class="stat-box"><div class="stat-label">구매 빈도</div><div class="stat-value">${esc(freq)}</div></div>` : ''}
+        </div>
+      </div>` : '';
+
+    const channelSection = channelHtml ? `
+      <div class="card-section">
+        <div class="card-section-title">주 이용 채널</div>
+        ${channelHtml}
+      </div>` : '';
+
+    const quoteHtml = quote ? `
+      <div class="card-section">
+        <div class="quote-block">"${esc(quote)}"</div>
+      </div>` : '';
+
+    card.innerHTML = `
+      <div class="card-header">
+        <div class="avatar" style="background:${selectedColor}">${initials(name)}</div>
+        <div>
+          <div class="card-name">${esc(name)}</div>
+          ${sub ? `<div class="card-sub">${esc(sub)}</div>` : ''}
+        </div>
+      </div>
+      <div class="card-body">
+        ${quoteHtml}
+        ${statsHtml}
+        ${channelSection}
+        ${tagSection('주요 카테고리', category)}
+        ${tagSection('구매 결정 요인', decision)}
+        ${section('구매 전 행동', behavior)}
+        ${section('장바구니 이탈 이유', abandon)}
+        ${section('주요 불만', complaint)}
+        ${loyalty ? `<div class="card-section"><div class="card-section-title">재구매 성향</div><div class="tag-list"><span class="tag">${esc(loyalty)}</span></div></div>` : ''}
+      </div>
+    `;
+  }
+
+  function reset() {
+    ['name','age','job','spend','freq','channel','category','decision','behavior','abandon','complaint','loyalty','quote']
+      .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+    selectedColor = COLORS[0];
+    document.querySelectorAll('.color-dot').forEach((d, i) => d.classList.toggle('selected', i === 0));
+    update();
+  }
+
+  function download() {
+    const name = val('name') || '페르소나';
+    const card = document.getElementById('persona-card');
+    if (!val('name')) { alert('먼저 이름을 입력해주세요.'); return; }
+    html2canvas(card, { scale: 2, backgroundColor: '#ffffff', useCORS: true, logging: false })
+      .then(canvas => {
+        const link = document.createElement('a');
+        link.download = `persona-${name}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      }).catch(() => alert('PNG 저장에 실패했습니다.'));
+  }
+</script>
+</body>
+</html>
